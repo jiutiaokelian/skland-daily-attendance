@@ -92,9 +92,22 @@ export function createMessageCollector(options: CreateMessageCollectorOptions): 
     const title = '【森空岛每日签到】'
     const content = messages.join('\n\n')
     const urls = options.notificationUrls ? toArray(options.notificationUrls) : []
-    const sender = createSender(urls)
+    // const sender = createSender(urls)
 
-    await sender.send(title, content)
+    // await sender.send(title, content)
+    // 上方是修改前
+
+    await fetch(urls[0], {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+              },
+      body: JSON.stringify({
+        title,
+        desp: content
+            })
+              })
+    console.log('Server酱通知发送成功')
 
     // Exit with error if any error occurred
     if (hasError && options.onError) {
